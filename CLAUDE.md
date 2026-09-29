@@ -53,8 +53,6 @@ Mac's LAN IP. See `.env.example`.
   synchronously and breaks on RNTL 14.
 - Jest `transformIgnorePatterns` must include `standard-navigation` (new Expo
   Router dependency shipped as ESM).
-- The Jest `moduleNameMapper` entry for `@rahulreddy05/spendly-shared` can go
-  once spendly-shared 1.0.1 (adds a `default` export condition) is installed.
 - `expo-router/testing-library` matchers have no bundled types — see
   `src/test/expo-router-matchers.d.ts`.
 

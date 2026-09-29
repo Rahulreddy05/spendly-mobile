@@ -4,7 +4,7 @@
   "main": "expo-router/entry",
   "dependencies": {
     "@expo/vector-icons": "^15.0.2",
-    "@rahulreddy05/spendly-shared": "^1.0.0",
+    "@rahulreddy05/spendly-shared": "^1.0.1",
     "@tanstack/react-query": "^5.104.0",
     "expo": "~57.0.25",
     "expo-application": "~57.0.3",
@@ -45,7 +45,7 @@
     "doctor": "npx expo-doctor"
   },
   "private": true,
-  "description": "Spendly for iPhone and Android — where your money comes from and where it goes",
+  "description": "Spendly for iPhone and Android \u2014 where your money comes from and where it goes",
   "engines": {
     "node": ">=22"
   },
@@ -72,9 +72,6 @@
         "functions": 80,
         "branches": 75
       }
-    },
-    "moduleNameMapper": {
-      "^@rahulreddy05/spendly-shared$": "<rootDir>/node_modules/@rahulreddy05/spendly-shared/dist/index.js"
     }
   }
 }
