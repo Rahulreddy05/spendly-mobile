@@ -39,3 +39,11 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# Spendly
+.env
+.env.*
+!.env.example
+coverage/
+
+dist-*/
