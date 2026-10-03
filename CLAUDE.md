@@ -55,6 +55,16 @@ Mac's LAN IP. See `.env.example`.
   Router dependency shipped as ESM).
 - `expo-router/testing-library` matchers have no bundled types — see
   `src/test/expo-router-matchers.d.ts`.
+- **iOS 27 SDK requires the UIScene life cycle** or the app exits at launch.
+  Expo 57's prebuild template does not adopt it yet, so the local config plugin
+  `plugins/with-ios-scene-lifecycle.js` registers Expo's `ExpoAppSceneDelegate`
+  and adapts `AppDelegate`. It throws if the template changes shape — when a
+  future Expo template adopts scenes itself, delete the plugin.
+- `react-test-renderer` must be pinned **exactly** to the React version (a `^`
+  range resolves to a newer React peer on fresh installs and breaks `npm ci`).
+- If `expo-modules-core` ends up only under `node_modules/expo/node_modules`,
+  Jest cannot find it; regenerate the lockfile rather than installing it directly
+  (expo-doctor forbids that).
 
 ## Status
 

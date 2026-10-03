@@ -35,7 +35,8 @@
         }
       ],
       "expo-font",
-      "expo-asset"
+      "expo-asset",
+      "./plugins/with-ios-scene-lifecycle"
     ],
     "scheme": "spendly",
     "experiments": {
