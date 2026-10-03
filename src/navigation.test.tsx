@@ -1,6 +1,6 @@
 import { act, fireEvent, renderRouter, screen, waitFor } from 'expo-router/testing-library';
 import { ApiError, HttpClient, memoryRefreshTokenStore } from '@rahulreddy05/spendly-shared';
-import { fakeApi, fakeServices } from './test/render';
+import { fakeApi, fakeBiometrics, fakePreferences, fakeServices } from './test/render';
 import type { AppServices } from './services/app-services';
 
 // The root layout builds its services here; tests hand it fakes instead.
@@ -36,13 +36,24 @@ describe('navigation and sign-in', () => {
     fireEvent.press(screen.getByRole('button', { name: 'Sign in' }));
 
     expect(await screen.findByText(/you brought in/)).toBeTruthy();
-    expect(mockServices.api.auth.login).toHaveBeenCalledWith({ email: 'rahul@example.com', password: 'correct-horse-battery' });
+    expect(mockServices.api.auth.login).toHaveBeenCalledWith({
+      email: 'rahul@example.com',
+      password: 'correct-horse-battery',
+    });
   });
 
   it('shows the server message when sign-in fails', async () => {
     mockServices = fakeServices({
       signedIn: false,
-      api: fakeApi({ auth: { login: jest.fn().mockRejectedValue(new ApiError(401, 'UNAUTHORIZED', 'Email or password is incorrect.')) } }),
+      api: fakeApi({
+        auth: {
+          login: jest
+            .fn()
+            .mockRejectedValue(
+              new ApiError(401, 'UNAUTHORIZED', 'Email or password is incorrect.'),
+            ),
+        },
+      }),
     });
     renderRouter(APP_DIR, { initialUrl: '/login' });
 
@@ -64,13 +75,21 @@ describe('navigation and sign-in', () => {
     fireEvent.press(screen.getByRole('button', { name: 'Create account' }));
 
     await waitFor(() =>
-      expect(mockServices.api.auth.register).toHaveBeenCalledWith({ email: 'new@example.com', password: 'correct-horse-battery', displayName: 'Rahul' }),
+      expect(mockServices.api.auth.register).toHaveBeenCalledWith({
+        email: 'new@example.com',
+        password: 'correct-horse-battery',
+        displayName: 'Rahul',
+      }),
     );
   });
 
   it('falls back to sign-in when the stored session has expired', async () => {
     mockServices = fakeServices({
-      api: fakeApi({ auth: { restoreSession: jest.fn().mockRejectedValue(new ApiError(401, 'UNAUTHORIZED', 'expired')) } }),
+      api: fakeApi({
+        auth: {
+          restoreSession: jest.fn().mockRejectedValue(new ApiError(401, 'UNAUTHORIZED', 'expired')),
+        },
+      }),
     });
     renderRouter(APP_DIR, { initialUrl: '/' });
     expect(await screen.findByText('Sign in to Spendly')).toBeTruthy();
@@ -80,11 +99,26 @@ describe('navigation and sign-in', () => {
     const http = new HttpClient({
       baseUrl: '',
       refreshTokenStore: memoryRefreshTokenStore(null),
-      fetch: jest.fn(async () =>
-        new Response(JSON.stringify({ error: { code: 'UPGRADE_REQUIRED', message: 'Update', details: { minVersion: '2.0.0' } } }), { status: 426 }),
+      fetch: jest.fn(
+        async () =>
+          new Response(
+            JSON.stringify({
+              error: {
+                code: 'UPGRADE_REQUIRED',
+                message: 'Update',
+                details: { minVersion: '2.0.0' },
+              },
+            }),
+            { status: 426 },
+          ),
       ),
     });
-    mockServices = { http, api: fakeApi() };
+    mockServices = {
+      http,
+      api: fakeApi(),
+      biometrics: fakeBiometrics(),
+      preferences: fakePreferences(),
+    };
     renderRouter(APP_DIR, { initialUrl: '/login' });
     await screen.findByText('Sign in to Spendly');
 

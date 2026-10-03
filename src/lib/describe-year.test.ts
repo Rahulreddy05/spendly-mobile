@@ -11,12 +11,30 @@ describe('describeYear', () => {
   });
 
   it('is honest about overspending and omits missing parts', () => {
-    const over = { ...summary, incomeCents: 1_000, expenseCents: 5_000, netCents: -4_000, savingsRate: null, topExpenseCategory: null, topIncomeCategory: null };
-    expect(describeYear(over)).toEqual(['In 2026 you brought in $10.00 and spent $50.00 — $40.00 more than came in.']);
+    const over = {
+      ...summary,
+      incomeCents: 1_000,
+      expenseCents: 5_000,
+      netCents: -4_000,
+      savingsRate: null,
+      topExpenseCategory: null,
+      topIncomeCategory: null,
+    };
+    expect(describeYear(over)).toEqual([
+      'In 2026 you brought in $10.00 and spent $50.00 — $40.00 more than came in.',
+    ]);
   });
 
   it('leaves out the savings rate when there was no income', () => {
-    const noIncome = { ...summary, incomeCents: 0, expenseCents: 0, netCents: 0, savingsRate: null };
-    expect(describeYear(noIncome)[0]).toBe('In 2026 you brought in $0.00 and spent $0.00, keeping $0.00.');
+    const noIncome = {
+      ...summary,
+      incomeCents: 0,
+      expenseCents: 0,
+      netCents: 0,
+      savingsRate: null,
+    };
+    expect(describeYear(noIncome)[0]).toBe(
+      'In 2026 you brought in $0.00 and spent $0.00, keeping $0.00.',
+    );
   });
 });

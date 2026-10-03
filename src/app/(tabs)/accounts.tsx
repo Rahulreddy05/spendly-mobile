@@ -57,7 +57,10 @@ export default function AccountsScreen() {
       {active.map((a) => (
         <AccountRow key={a.id} account={a} />
       ))}
-      <Notice>Linking a bank and adding accounts from the app is coming in the next update. Until then, use the Spendly website.</Notice>
+      <Notice>
+        Linking a bank and adding accounts from the app is coming in the next update. Until then,
+        use the Spendly website.
+      </Notice>
     </Screen>
   );
 }

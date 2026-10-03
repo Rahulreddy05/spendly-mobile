@@ -19,7 +19,9 @@ export function Screen({
       style={{ backgroundColor: theme.background }}
       contentContainerStyle={styles.body}
       refreshControl={
-        onRefresh ? <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={theme.primary} /> : undefined
+        onRefresh ? (
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={theme.primary} />
+        ) : undefined
       }
     >
       {children}

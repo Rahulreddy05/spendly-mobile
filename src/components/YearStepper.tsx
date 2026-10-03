@@ -33,22 +33,43 @@ function StepButton({
 }
 
 /** ‹ 2026 › — steps through the last YEAR_PICKER_SPAN years. */
-export function YearStepper({ value, onChange }: { value: number; onChange: (year: number) => void }) {
+export function YearStepper({
+  value,
+  onChange,
+}: {
+  value: number;
+  onChange: (year: number) => void;
+}) {
   const current = new Date().getFullYear();
   const min = current - YEAR_PICKER_SPAN + 1;
 
   return (
     <View style={styles.row} accessibilityLabel={`Year ${value}`}>
-      <StepButton label="Previous year" glyph="‹" enabled={value > min} onPress={() => onChange(value - 1)} />
+      <StepButton
+        label="Previous year"
+        glyph="‹"
+        enabled={value > min}
+        onPress={() => onChange(value - 1)}
+      />
       <AppText size="title" bold>
         {value}
       </AppText>
-      <StepButton label="Next year" glyph="›" enabled={value < current} onPress={() => onChange(value + 1)} />
+      <StepButton
+        label="Next year"
+        glyph="›"
+        enabled={value < current}
+        onPress={() => onChange(value + 1)}
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   row: { flexDirection: 'row', alignItems: 'center', gap: SPACING.xs },
-  arrow: { minWidth: TOUCH_TARGET, minHeight: TOUCH_TARGET, alignItems: 'center', justifyContent: 'center' },
+  arrow: {
+    minWidth: TOUCH_TARGET,
+    minHeight: TOUCH_TARGET,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });

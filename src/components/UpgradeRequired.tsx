@@ -15,8 +15,8 @@ export function UpgradeRequired({ minVersion }: { minVersion?: string }) {
         </AppText>
         <AppText tone="muted">
           This version of the app is no longer supported
-          {minVersion ? ` — version ${minVersion} or newer is required` : ''}. Please update from the
-          App Store or Google Play to keep using Spendly.
+          {minVersion ? ` — version ${minVersion} or newer is required` : ''}. Please update from
+          the App Store or Google Play to keep using Spendly.
         </AppText>
       </View>
     </SafeAreaView>

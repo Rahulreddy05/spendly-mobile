@@ -2,18 +2,27 @@ import { useState } from 'react';
 import { Alert, Modal, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Application from 'expo-application';
+import type { SecondFactor } from '@rahulreddy05/spendly-shared';
 import { useAuth } from '../../auth/auth-context';
 import { useTheme } from '../../hooks/use-theme';
 import { Screen } from '../../components/Screen';
 import { AppText, Button, Card, ErrorBanner, TextField } from '../../components/ui';
+import { SecondFactorInput } from '../../components/SecondFactorInput';
+import { VerifyEmailCard } from '../../components/VerifyEmailCard';
+import { AppLockSection } from '../../components/settings/AppLockSection';
+import { TwoFactorSection } from '../../components/settings/TwoFactorSection';
+import { ChangePasswordSection } from '../../components/settings/ChangePasswordSection';
+import { DevicesSection } from '../../components/settings/DevicesSection';
+import { ActivitySection } from '../../components/settings/ActivitySection';
 import { FALLBACK_APP_VERSION } from '../../constants/app.constants';
 import { SPACING } from '../../constants/theme.constants';
 
-/** Password-confirmed permanent deletion — required by the App Store and Play Store. */
+/** Password(+2FA)-confirmed permanent deletion — required by the App Store and Play Store. */
 function DeleteAccountModal({ visible, onClose }: { visible: boolean; onClose: () => void }) {
-  const { deleteAccount } = useAuth();
+  const { user, deleteAccount } = useAuth();
   const theme = useTheme();
   const [password, setPassword] = useState('');
+  const [factor, setFactor] = useState<SecondFactor | null>(null);
   const [error, setError] = useState<unknown>(null);
   const [pending, setPending] = useState(false);
 
@@ -21,7 +30,7 @@ function DeleteAccountModal({ visible, onClose }: { visible: boolean; onClose: (
     setError(null);
     setPending(true);
     try {
-      await deleteAccount(password);
+      await deleteAccount(password, factor ?? undefined);
     } catch (err) {
       setError(err);
       setPending(false);
@@ -29,7 +38,12 @@ function DeleteAccountModal({ visible, onClose }: { visible: boolean; onClose: (
   };
 
   return (
-    <Modal visible={visible} animationType="slide" presentationStyle="pageSheet" onRequestClose={onClose}>
+    <Modal
+      visible={visible}
+      animationType="slide"
+      presentationStyle="pageSheet"
+      onRequestClose={onClose}
+    >
       <SafeAreaView style={[styles.modal, { backgroundColor: theme.background }]}>
         <AppText size="title" bold accessibilityRole="header">
           Delete your account
@@ -45,8 +59,15 @@ function DeleteAccountModal({ visible, onClose }: { visible: boolean; onClose: (
           secureTextEntry
           autoComplete="current-password"
         />
+        {user?.mfaEnabled && <SecondFactorInput onChange={setFactor} />}
         {error !== null && <ErrorBanner error={error} />}
-        <Button title="Delete permanently" variant="danger" onPress={() => void confirm()} loading={pending} disabled={!password} />
+        <Button
+          title="Delete permanently"
+          variant="danger"
+          onPress={() => void confirm()}
+          loading={pending}
+          disabled={!password || Boolean(user?.mfaEnabled && !factor)}
+        />
         <Button title="Cancel" variant="secondary" onPress={onClose} disabled={pending} />
       </SafeAreaView>
     </Modal>
@@ -68,8 +89,17 @@ export default function SettingsScreen() {
     <Screen>
       <Card label="Profile">
         <AppText bold>{user?.displayName ?? 'Signed in'}</AppText>
-        <AppText tone="muted">{user?.email}</AppText>
+        <AppText tone="muted">
+          {user?.email}
+          {user?.emailVerified ? ' · Verified' : ' · Not verified'}
+        </AppText>
       </Card>
+      <VerifyEmailCard />
+      <AppLockSection />
+      <TwoFactorSection />
+      <ChangePasswordSection />
+      <DevicesSection />
+      <ActivitySection />
       <View style={styles.actions}>
         <Button title="Sign out" variant="secondary" onPress={confirmSignOut} />
         <Button title="Delete account" variant="danger" onPress={() => setDeleting(true)} />

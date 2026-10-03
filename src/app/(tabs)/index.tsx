@@ -11,6 +11,7 @@ import { MonthlyBars } from '../../components/MonthlyBars';
 import { MerchantList } from '../../components/MerchantList';
 import { AppText, ErrorBanner, LoadingView, Notice } from '../../components/ui';
 import { SPACING } from '../../constants/theme.constants';
+import { VerifyEmailCard } from '../../components/VerifyEmailCard';
 
 export default function DashboardScreen() {
   const [year, setYear] = useState(() => new Date().getFullYear());
@@ -27,6 +28,7 @@ export default function DashboardScreen() {
 
   return (
     <Screen refreshing={summary.isRefetching} onRefresh={refresh}>
+      <VerifyEmailCard />
       <YearStepper value={year} onChange={setYear} />
 
       {summary.isLoading && <LoadingView label="Loading your summary" />}
@@ -35,7 +37,8 @@ export default function DashboardScreen() {
       {data &&
         (data.transactionCount === 0 ? (
           <Notice>
-            Nothing recorded for {year} yet. Link a bank or add transactions to see where your money goes.
+            Nothing recorded for {year} yet. Link a bank or add transactions to see where your money
+            goes.
           </Notice>
         ) : (
           <>
@@ -52,9 +55,15 @@ export default function DashboardScreen() {
               <StatTile
                 label="Kept"
                 value={formatMoney(data.netCents)}
-                {...(data.savingsRate !== null ? { hint: `${formatPercent(data.savingsRate)} savings rate` } : {})}
+                {...(data.savingsRate !== null
+                  ? { hint: `${formatPercent(data.savingsRate)} savings rate` }
+                  : {})}
               />
-              <StatTile label="Transactions" value={String(data.transactionCount)} hint="Transfers excluded" />
+              <StatTile
+                label="Transactions"
+                value={String(data.transactionCount)}
+                hint="Transfers excluded"
+              />
             </View>
             <CategoryBreakdown
               title="Where your money went"
@@ -69,8 +78,16 @@ export default function DashboardScreen() {
               emptyText="No income recorded."
             />
             <MonthlyBars months={data.byMonth} />
-            <MerchantList title="Top places you spent" merchants={spend.data ?? []} emptyText="No merchants yet." />
-            <MerchantList title="Top income sources" merchants={income.data ?? []} emptyText="No income sources yet." />
+            <MerchantList
+              title="Top places you spent"
+              merchants={spend.data ?? []}
+              emptyText="No merchants yet."
+            />
+            <MerchantList
+              title="Top income sources"
+              merchants={income.data ?? []}
+              emptyText="No income sources yet."
+            />
           </>
         ))}
     </Screen>

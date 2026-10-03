@@ -32,13 +32,30 @@ export function AppText({
   bold?: boolean;
   style?: StyleProp<TextStyle>;
   accessibilityRole?: 'header' | 'text';
+  accessibilityLabel?: string;
   numberOfLines?: number;
+  /** Long-press to copy (setup keys, recovery codes). */
+  selectable?: boolean;
 }) {
   const theme = useTheme();
-  const color = { default: theme.text, muted: theme.textMuted, income: theme.income, expense: theme.expense, danger: theme.danger }[tone];
+  const color = {
+    default: theme.text,
+    muted: theme.textMuted,
+    income: theme.income,
+    expense: theme.expense,
+    danger: theme.danger,
+  }[tone];
   return (
     <Text
-      style={[{ color, fontSize: FONT_SIZE[size], fontWeight: bold ? '700' : '400', fontVariant: ['tabular-nums'] }, style]}
+      style={[
+        {
+          color,
+          fontSize: FONT_SIZE[size],
+          fontWeight: bold ? '700' : '400',
+          fontVariant: ['tabular-nums'],
+        },
+        style,
+      ]}
       {...rest}
     >
       {children}
@@ -73,7 +90,8 @@ export function Button({
 }) {
   const theme = useTheme();
   const bg = variant === 'primary' ? theme.primary : theme.surface;
-  const fg = variant === 'primary' ? theme.onPrimary : variant === 'danger' ? theme.danger : theme.text;
+  const fg =
+    variant === 'primary' ? theme.onPrimary : variant === 'danger' ? theme.danger : theme.text;
   return (
     <Pressable
       accessibilityRole="button"
@@ -85,12 +103,20 @@ export function Button({
         { backgroundColor: bg, borderColor: theme.border, opacity: pressed || disabled ? 0.7 : 1 },
       ]}
     >
-      {loading ? <ActivityIndicator color={fg} /> : <Text style={[styles.buttonText, { color: fg }]}>{title}</Text>}
+      {loading ? (
+        <ActivityIndicator color={fg} />
+      ) : (
+        <Text style={[styles.buttonText, { color: fg }]}>{title}</Text>
+      )}
     </Pressable>
   );
 }
 
-export function TextField({ label, error, ...input }: TextInputProps & { label: string; error?: string | null }) {
+export function TextField({
+  label,
+  error,
+  ...input
+}: TextInputProps & { label: string; error?: string | null }) {
   const theme = useTheme();
   return (
     <View style={styles.field}>
@@ -100,7 +126,14 @@ export function TextField({ label, error, ...input }: TextInputProps & { label: 
       <TextInput
         accessibilityLabel={label}
         placeholderTextColor={theme.textMuted}
-        style={[styles.input, { borderColor: error ? theme.danger : theme.border, color: theme.text, backgroundColor: theme.surface }]}
+        style={[
+          styles.input,
+          {
+            borderColor: error ? theme.danger : theme.border,
+            color: theme.text,
+            backgroundColor: theme.surface,
+          },
+        ]}
         {...input}
       />
       {error ? (
@@ -124,7 +157,9 @@ export function ErrorBanner({ error }: { error: unknown }) {
 export function Notice({ children }: { children: ReactNode }) {
   const theme = useTheme();
   return (
-    <View style={[styles.banner, { borderColor: theme.border, backgroundColor: theme.surfaceMuted }]}>
+    <View
+      style={[styles.banner, { borderColor: theme.border, backgroundColor: theme.surfaceMuted }]}
+    >
       <AppText tone="muted">{children}</AppText>
     </View>
   );
@@ -140,7 +175,12 @@ export function LoadingView({ label = 'Loading' }: { label?: string }) {
 }
 
 const styles = StyleSheet.create({
-  card: { borderWidth: StyleSheet.hairlineWidth, borderRadius: RADIUS.md, padding: SPACING.lg, gap: SPACING.md },
+  card: {
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: RADIUS.md,
+    padding: SPACING.lg,
+    gap: SPACING.md,
+  },
   button: {
     minHeight: TOUCH_TARGET,
     borderRadius: RADIUS.sm,
@@ -151,7 +191,13 @@ const styles = StyleSheet.create({
   },
   buttonText: { fontSize: FONT_SIZE.body, fontWeight: '600' },
   field: { gap: SPACING.xs },
-  input: { minHeight: TOUCH_TARGET, borderWidth: 1, borderRadius: RADIUS.sm, paddingHorizontal: SPACING.md, fontSize: FONT_SIZE.body },
+  input: {
+    minHeight: TOUCH_TARGET,
+    borderWidth: 1,
+    borderRadius: RADIUS.sm,
+    paddingHorizontal: SPACING.md,
+    fontSize: FONT_SIZE.body,
+  },
   banner: { borderWidth: 1, borderRadius: RADIUS.sm, padding: SPACING.md },
   center: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: SPACING.xxl },
 });

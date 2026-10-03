@@ -1,5 +1,9 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { QUERY_KEYS, TRANSACTIONS_PAGE_SIZE, type TransactionFilters } from '@rahulreddy05/spendly-shared';
+import {
+  QUERY_KEYS,
+  TRANSACTIONS_PAGE_SIZE,
+  type TransactionFilters,
+} from '@rahulreddy05/spendly-shared';
 import { useApi } from '../services/app-services';
 
 export function useTransactions(filters: TransactionFilters) {
