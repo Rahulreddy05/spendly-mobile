@@ -4,7 +4,10 @@ import { useApi } from '../services/app-services';
 
 export function useYearSummary(year: number) {
   const api = useApi();
-  return useQuery({ queryKey: QUERY_KEYS.summary(year), queryFn: () => api.analytics.summary(year) });
+  return useQuery({
+    queryKey: QUERY_KEYS.summary(year),
+    queryFn: () => api.analytics.summary(year),
+  });
 }
 
 export function useTopMerchants(year: number, direction: Direction) {

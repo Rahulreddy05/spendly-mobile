@@ -8,6 +8,8 @@ import { createAppServices } from '../services/create-services';
 import { useAppServices } from '../services/app-services';
 import { useAuth } from '../auth/auth-context';
 import { UpgradeRequired } from '../components/UpgradeRequired';
+import { AppLockGate } from '../components/AppLockGate';
+import { ReauthProvider } from '../auth/ReauthProvider';
 
 // Keep the splash screen up until we know whether a session can be restored.
 SplashScreen.preventAutoHideAsync().catch(() => undefined);
@@ -20,7 +22,11 @@ export default function RootLayout() {
     <SafeAreaProvider>
       <AppProviders services={services} queryClient={queryClient}>
         <UpgradeGate>
-          <RootNavigator />
+          <AppLockGate>
+            <ReauthProvider>
+              <RootNavigator />
+            </ReauthProvider>
+          </AppLockGate>
         </UpgradeGate>
         <StatusBar style="auto" />
       </AppProviders>
@@ -47,6 +53,7 @@ function RootNavigator() {
       <Stack.Protected guard={!signedIn}>
         <Stack.Screen name="login" />
         <Stack.Screen name="register" />
+        <Stack.Screen name="forgot-password" />
       </Stack.Protected>
     </Stack>
   );

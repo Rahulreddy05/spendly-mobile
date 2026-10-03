@@ -18,7 +18,9 @@ import { SPACING } from '../../constants/theme.constants';
 function TransactionRow({ tx, accountName }: { tx: Transaction; accountName: string }) {
   const theme = useTheme();
   const title = tx.merchant ?? CATEGORY_LABEL[tx.category];
-  const amount = formatMoney(signedCents(tx.amountCents, tx.direction), tx.currency, { signed: true });
+  const amount = formatMoney(signedCents(tx.amountCents, tx.direction), tx.currency, {
+    signed: true,
+  });
   return (
     <View
       accessible
@@ -28,7 +30,9 @@ function TransactionRow({ tx, accountName }: { tx: Transaction; accountName: str
       <View style={styles.info}>
         <AppText numberOfLines={1}>
           {title}
-          {tx.status === TRANSACTION_STATUS.PENDING ? <AppText tone="muted"> · Pending</AppText> : null}
+          {tx.status === TRANSACTION_STATUS.PENDING ? (
+            <AppText tone="muted"> · Pending</AppText>
+          ) : null}
         </AppText>
         <AppText size="small" tone="muted" numberOfLines={1}>
           {CATEGORY_LABEL[tx.category]} · {formatDate(tx.occurredAt)} · {accountName}
@@ -47,7 +51,10 @@ export default function TransactionsScreen() {
   const transactions = useTransactions({ year });
   const accounts = useAccounts();
 
-  const names = useMemo(() => new Map((accounts.data ?? []).map((a) => [a.id, a.name])), [accounts.data]);
+  const names = useMemo(
+    () => new Map((accounts.data ?? []).map((a) => [a.id, a.name])),
+    [accounts.data],
+  );
   const sections = useMemo(
     () =>
       groupByMonth(transactions.data?.pages.flatMap((p) => p.items) ?? []).map((g) => ({
@@ -66,17 +73,29 @@ export default function TransactionsScreen() {
       contentContainerStyle={styles.body}
       sections={sections}
       keyExtractor={(tx) => tx.id}
-      renderItem={({ item }) => <TransactionRow tx={item} accountName={names.get(item.accountId) ?? ''} />}
+      renderItem={({ item }) => (
+        <TransactionRow tx={item} accountName={names.get(item.accountId) ?? ''} />
+      )}
       renderSectionHeader={({ section }) => (
-        <AppText size="small" tone="muted" bold style={[styles.header, { backgroundColor: theme.background }]}>
+        <AppText
+          size="small"
+          tone="muted"
+          bold
+          style={[styles.header, { backgroundColor: theme.background }]}
+        >
           {section.title.toUpperCase()}
         </AppText>
       )}
       ListHeaderComponent={transactions.isError ? <ErrorBanner error={transactions.error} /> : null}
-      ListEmptyComponent={transactions.isSuccess ? <Notice>No transactions in {year} yet.</Notice> : null}
-      ListFooterComponent={transactions.isFetchingNextPage ? <LoadingView label="Loading more" /> : null}
+      ListEmptyComponent={
+        transactions.isSuccess ? <Notice>No transactions in {year} yet.</Notice> : null
+      }
+      ListFooterComponent={
+        transactions.isFetchingNextPage ? <LoadingView label="Loading more" /> : null
+      }
       onEndReached={() => {
-        if (transactions.hasNextPage && !transactions.isFetchingNextPage) void transactions.fetchNextPage();
+        if (transactions.hasNextPage && !transactions.isFetchingNextPage)
+          void transactions.fetchNextPage();
       }}
       onEndReachedThreshold={0.5}
       refreshControl={

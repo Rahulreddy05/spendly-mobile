@@ -3,7 +3,15 @@ import { formatMoney, type MerchantTotal } from '@rahulreddy05/spendly-shared';
 import { AppText, Card } from './ui';
 import { SPACING } from '../constants/theme.constants';
 
-export function MerchantList({ title, merchants, emptyText }: { title: string; merchants: MerchantTotal[]; emptyText: string }) {
+export function MerchantList({
+  title,
+  merchants,
+  emptyText,
+}: {
+  title: string;
+  merchants: MerchantTotal[];
+  emptyText: string;
+}) {
   return (
     <Card label={title}>
       <AppText bold accessibilityRole="header">

@@ -3,7 +3,17 @@ import { AppText } from './ui';
 import { useTheme } from '../hooks/use-theme';
 import { RADIUS, SPACING } from '../constants/theme.constants';
 
-export function StatTile({ label, value, hint, tone }: { label: string; value: string; hint?: string; tone?: 'income' | 'expense' }) {
+export function StatTile({
+  label,
+  value,
+  hint,
+  tone,
+}: {
+  label: string;
+  value: string;
+  hint?: string;
+  tone?: 'income' | 'expense';
+}) {
   const theme = useTheme();
   return (
     <View
@@ -27,5 +37,12 @@ export function StatTile({ label, value, hint, tone }: { label: string; value: s
 }
 
 const styles = StyleSheet.create({
-  tile: { flexBasis: '47%', flexGrow: 1, borderWidth: StyleSheet.hairlineWidth, borderRadius: RADIUS.md, padding: SPACING.md, gap: 2 },
+  tile: {
+    flexBasis: '47%',
+    flexGrow: 1,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: RADIUS.md,
+    padding: SPACING.md,
+    gap: 2,
+  },
 });

@@ -6,7 +6,12 @@
 /** Keys in expo-secure-store (Keychain / Keystore). Alphanumerics, '.', '-', '_' only. */
 export const SECURE_STORE_KEYS = {
   REFRESH_TOKEN: 'spendly.refreshToken',
+  /** "true" when the user asked for Face ID / fingerprint to open the app. */
+  BIOMETRIC_LOCK: 'spendly.biometricLock',
 } as const;
+
+/** Re-lock the app if it was in the background at least this long. */
+export const APP_LOCK_AFTER_BACKGROUND_MS = 60_000;
 
 /**
  * Where a development build finds the local API when EXPO_PUBLIC_API_URL is

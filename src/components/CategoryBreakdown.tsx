@@ -1,5 +1,11 @@
 import { StyleSheet, View } from 'react-native';
-import { CATEGORY_LABEL, formatMoney, formatPercent, type CategoryTotal, type Direction } from '@rahulreddy05/spendly-shared';
+import {
+  CATEGORY_LABEL,
+  formatMoney,
+  formatPercent,
+  type CategoryTotal,
+  type Direction,
+} from '@rahulreddy05/spendly-shared';
 import { AppText, Card } from './ui';
 import { useTheme } from '../hooks/use-theme';
 import { RADIUS, SPACING } from '../constants/theme.constants';
@@ -38,12 +44,21 @@ export function CategoryBreakdown({
           >
             <View style={styles.labels}>
               <AppText>
-                {CATEGORY_LABEL[item.category]} <AppText tone="muted">· {formatPercent(item.share)}</AppText>
+                {CATEGORY_LABEL[item.category]}{' '}
+                <AppText tone="muted">· {formatPercent(item.share)}</AppText>
               </AppText>
               <AppText bold>{formatMoney(item.totalCents)}</AppText>
             </View>
             <View style={[styles.track, { backgroundColor: theme.surfaceMuted }]}>
-              <View style={[styles.fill, { backgroundColor: fill, width: `${Math.max(item.share * PERCENT, MIN_BAR_PERCENT)}%` }]} />
+              <View
+                style={[
+                  styles.fill,
+                  {
+                    backgroundColor: fill,
+                    width: `${Math.max(item.share * PERCENT, MIN_BAR_PERCENT)}%`,
+                  },
+                ]}
+              />
             </View>
           </View>
         ))

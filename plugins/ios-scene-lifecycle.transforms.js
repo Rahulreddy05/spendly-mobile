@@ -38,7 +38,10 @@ function withSceneManifest(infoPlist) {
 function adoptSceneLifecycle(appDelegateSwift) {
   if (appDelegateSwift.includes(PROVIDER_PROTOCOL)) return appDelegateSwift; // already applied
 
-  if (!appDelegateSwift.includes(CLASS_DECLARATION) || !START_IN_APP_DELEGATE.test(appDelegateSwift)) {
+  if (
+    !appDelegateSwift.includes(CLASS_DECLARATION) ||
+    !START_IN_APP_DELEGATE.test(appDelegateSwift)
+  ) {
     // Fail the build loudly rather than ship an app that cannot launch on iOS 27.
     throw new Error(
       'with-ios-scene-lifecycle: AppDelegate.swift no longer matches the expected Expo template. ' +

@@ -1,5 +1,7 @@
 import { createContext, useContext } from 'react';
 import type { HttpClient, SpendlyApi } from '@rahulreddy05/spendly-shared';
+import type { BiometricAuth } from './biometrics';
+import type { Preferences } from './preferences';
 
 /**
  * Dependency-injection container for the app. The root layout provides the
@@ -8,6 +10,8 @@ import type { HttpClient, SpendlyApi } from '@rahulreddy05/spendly-shared';
 export interface AppServices {
   http: HttpClient;
   api: SpendlyApi;
+  biometrics: BiometricAuth;
+  preferences: Preferences;
 }
 
 export const AppServicesContext = createContext<AppServices | null>(null);

@@ -1,6 +1,12 @@
 import type { Account, AuthResponse, Transaction, YearSummary } from '@rahulreddy05/spendly-shared';
 
-export const user = { id: 'u1', email: 'rahul@example.com', displayName: 'Rahul' };
+export const user = {
+  id: 'u1',
+  email: 'rahul@example.com',
+  displayName: 'Rahul',
+  emailVerified: true,
+  mfaEnabled: false,
+};
 export const session: AuthResponse = { accessToken: 'access-1', refreshToken: 'refresh-1', user };
 
 export const manualAccount: Account = {
@@ -54,7 +60,12 @@ export const summary: YearSummary = {
   netCents: 350_000,
   savingsRate: 0.583,
   transactionCount: 12,
-  topExpenseCategory: { category: 'HOUSING', totalCents: 185_000, transactionCount: 1, share: 0.74 },
+  topExpenseCategory: {
+    category: 'HOUSING',
+    totalCents: 185_000,
+    transactionCount: 1,
+    share: 0.74,
+  },
   topIncomeCategory: { category: 'SALARY', totalCents: 600_000, transactionCount: 2, share: 1 },
   expenseByCategory: [
     { category: 'HOUSING', totalCents: 185_000, transactionCount: 1, share: 0.74 },

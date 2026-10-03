@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
-import type { AuthResponse, User } from '@rahulreddy05/spendly-shared';
+import { isMfaChallenge, type AuthResponse, type User } from '@rahulreddy05/spendly-shared';
 import { useAppServices } from '../services/app-services';
 import { AuthContext, type AuthContextValue, type AuthStatus } from './auth-context';
 
@@ -48,7 +48,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     () => ({
       status,
       user,
-      login: async (email, password) => acceptSession(await api.auth.login({ email, password })),
+      login: async (email, password) => {
+        const result = await api.auth.login({ email, password });
+        if (isMfaChallenge(result)) return { status: 'mfa-required', mfaToken: result.mfaToken };
+        acceptSession(result);
+        return { status: 'signed-in' };
+      },
+      completeMfa: async (mfaToken, factor) =>
+        acceptSession(await api.auth.verifyMfa(mfaToken, factor)),
       register: async (email, password, displayName) =>
         acceptSession(
           await api.auth.register({ email, password, ...(displayName ? { displayName } : {}) }),
@@ -60,8 +67,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           endSession();
         }
       },
-      deleteAccount: async (password) => {
-        await api.auth.deleteAccount(password);
+      refreshUser: async () => {
+        const me = await api.auth.me();
+        setUser({
+          id: me.id,
+          email: me.email,
+          displayName: me.displayName,
+          emailVerified: me.emailVerified,
+          mfaEnabled: me.mfaEnabled,
+        });
+      },
+      deleteAccount: async (password, factor) => {
+        await api.auth.deleteAccount(password, factor);
         endSession();
       },
     }),

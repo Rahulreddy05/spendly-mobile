@@ -1,5 +1,10 @@
 import { StyleSheet, View } from 'react-native';
-import { DIRECTION_LABEL, formatMoney, monthLabel, type MonthTotal } from '@rahulreddy05/spendly-shared';
+import {
+  DIRECTION_LABEL,
+  formatMoney,
+  monthLabel,
+  type MonthTotal,
+} from '@rahulreddy05/spendly-shared';
 import { AppText, Card } from './ui';
 import { useTheme } from '../hooks/use-theme';
 import { SPACING } from '../constants/theme.constants';
@@ -26,8 +31,18 @@ export function MonthlyBars({ months }: { months: MonthTotal[] }) {
             accessibilityLabel={`${monthLabel(m.month)}: ${DIRECTION_LABEL.INCOME} ${formatMoney(m.incomeCents)}, ${DIRECTION_LABEL.EXPENSE} ${formatMoney(m.expenseCents)}`}
           >
             <View style={styles.bars}>
-              <View style={[styles.bar, { height: height(m.incomeCents), backgroundColor: theme.income }]} />
-              <View style={[styles.bar, { height: height(m.expenseCents), backgroundColor: theme.expense }]} />
+              <View
+                style={[
+                  styles.bar,
+                  { height: height(m.incomeCents), backgroundColor: theme.income },
+                ]}
+              />
+              <View
+                style={[
+                  styles.bar,
+                  { height: height(m.expenseCents), backgroundColor: theme.expense },
+                ]}
+              />
             </View>
             <AppText size="caption" tone="muted">
               {monthLabel(m.month).charAt(0)}
@@ -55,7 +70,12 @@ function Legend({ color, label }: { color: string; label: string }) {
 }
 
 const styles = StyleSheet.create({
-  chart: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end', height: CHART_HEIGHT + 20 },
+  chart: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-end',
+    height: CHART_HEIGHT + 20,
+  },
   month: { alignItems: 'center', gap: SPACING.xs, flex: 1 },
   bars: { flexDirection: 'row', alignItems: 'flex-end', gap: 2, height: CHART_HEIGHT },
   bar: { width: 7, borderTopLeftRadius: 3, borderTopRightRadius: 3 },
