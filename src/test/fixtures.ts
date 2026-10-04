@@ -1,4 +1,10 @@
-import type { Account, AuthResponse, Transaction, YearSummary } from '@rahulreddy05/spendly-shared';
+import type {
+  Account,
+  AuthResponse,
+  BankConnection,
+  Transaction,
+  YearSummary,
+} from '@rahulreddy05/spendly-shared';
 
 export const user = {
   id: 'u1',
@@ -33,9 +39,19 @@ export const linkedAccount: Account = {
   type: 'CHECKING',
   last4: '6789',
   color: 'petrol',
-  source: 'STRIPE',
+  source: 'PLAID',
   balanceCents: 250_000,
   lastSyncedAt: '2026-09-01T00:00:00.000Z',
+};
+
+export const connection: BankConnection = {
+  id: 'conn-1',
+  provider: 'PLAID',
+  institutionName: 'Chase',
+  status: 'ACTIVE',
+  lastSyncedAt: '2026-09-01T00:00:00.000Z',
+  createdAt: '2026-08-01T00:00:00.000Z',
+  accounts: [linkedAccount],
 };
 
 export const transaction = (overrides: Partial<Transaction> = {}): Transaction => ({

@@ -118,6 +118,7 @@ describe('navigation and sign-in', () => {
       api: fakeApi(),
       biometrics: fakeBiometrics(),
       preferences: fakePreferences(),
+      linker: null,
     };
     renderRouter(APP_DIR, { initialUrl: '/login' });
     await screen.findByText('Sign in to Spendly');

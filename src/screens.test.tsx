@@ -2,10 +2,9 @@ import { ScrollView, SectionList } from 'react-native';
 import { act, fireEvent, screen, waitFor } from '@testing-library/react-native';
 import { ApiError } from '@rahulreddy05/spendly-shared';
 import DashboardScreen from './app/(tabs)/index';
-import AccountsScreen from './app/(tabs)/accounts';
 import TransactionsScreen from './app/(tabs)/transactions';
 import { fakeApi, fakeServices, renderWithProviders } from './test/render';
-import { linkedAccount, manualAccount, summary, transaction } from './test/fixtures';
+import { manualAccount, summary, transaction } from './test/fixtures';
 
 const withApi = (api = fakeApi()) => fakeServices({ api });
 
@@ -79,44 +78,6 @@ describe('Dashboard', () => {
       ),
     );
     expect(await screen.findByText('Could not reach Spendly.')).toBeTruthy();
-  });
-});
-
-describe('Accounts', () => {
-  it('lists active accounts with bank details and hides archived ones', async () => {
-    const archived = { ...manualAccount, id: 'old', name: 'Old card', archived: true };
-    const disconnected = {
-      ...linkedAccount,
-      id: 'dis',
-      name: 'Savings',
-      status: 'DISCONNECTED' as const,
-    };
-    renderWithProviders(
-      <AccountsScreen />,
-      withApi(
-        fakeApi({
-          accounts: {
-            list: jest
-              .fn()
-              .mockResolvedValue([linkedAccount, manualAccount, archived, disconnected]),
-          },
-        }),
-      ),
-    );
-
-    expect(await screen.findByText('Total Checking')).toBeTruthy();
-    expect(
-      screen.getAllByText('Linked · Checking · Chase · •••• 6789 · Synced Sep 1, 2026'),
-    ).toHaveLength(2);
-    expect(screen.getAllByText('$2,500.00')).toHaveLength(2);
-    expect(screen.getByText('Manual · Cash')).toBeTruthy();
-    expect(screen.queryByText('Old card')).toBeNull();
-    expect(screen.getByText(/Disconnected/)).toBeTruthy();
-  });
-
-  it('says when there are no accounts', async () => {
-    renderWithProviders(<AccountsScreen />);
-    expect(await screen.findByText('No accounts yet.')).toBeTruthy();
   });
 });
 

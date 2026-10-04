@@ -22,13 +22,10 @@ const withMfaUser = () => ({
 
 describe('two-factor authentication', () => {
   it('confirms the password, opens the authenticator, and shows recovery codes once', async () => {
-    const setupTotp = jest
-      .fn()
-      .mockRejectedValueOnce(reauthRequired())
-      .mockResolvedValue({
-        secret: 'JBSWY3DPEHPK3PXP',
-        otpauthUrl: 'otpauth://totp/Spendly:r?secret=JBSWY3DPEHPK3PXP',
-      });
+    const setupTotp = jest.fn().mockRejectedValueOnce(reauthRequired()).mockResolvedValue({
+      secret: 'JBSWY3DPEHPK3PXP',
+      otpauthUrl: 'otpauth://totp/Spendly:r?secret=JBSWY3DPEHPK3PXP',
+    });
     const services = fakeServices({ api: fakeApi({ security: { setupTotp } }) });
     jest.spyOn(Linking, 'openURL').mockResolvedValue(true);
     jest.spyOn(Share, 'share').mockResolvedValue({ action: 'sharedAction' });
@@ -180,17 +177,15 @@ describe('password, devices, activity', () => {
     const services = fakeServices({
       api: fakeApi({
         security: {
-          events: jest
-            .fn()
-            .mockResolvedValue([
-              {
-                id: 'e1',
-                type: 'ACCOUNT_LOCKED',
-                deviceName: 'Chrome on Windows',
-                ipAddress: null,
-                createdAt: '2026-10-03T00:00:00Z',
-              },
-            ]),
+          events: jest.fn().mockResolvedValue([
+            {
+              id: 'e1',
+              type: 'ACCOUNT_LOCKED',
+              deviceName: 'Chrome on Windows',
+              ipAddress: null,
+              createdAt: '2026-10-03T00:00:00Z',
+            },
+          ]),
         },
       }),
     });
