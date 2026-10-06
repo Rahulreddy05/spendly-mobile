@@ -1,7 +1,10 @@
 import type {
   Account,
+  AppNotification,
   AuthResponse,
   BankConnection,
+  Budget,
+  BudgetsResponse,
   Transaction,
   YearSummary,
 } from '@rahulreddy05/spendly-shared';
@@ -96,3 +99,32 @@ export const summary: YearSummary = {
   })),
   byAccount: [],
 };
+
+export const budget = (overrides: Partial<Budget> = {}): Budget => ({
+  id: 'b1',
+  category: 'DINING',
+  limitCents: 30_000,
+  spentCents: 0,
+  remainingCents: 30_000,
+  usedPercent: 0,
+  status: 'OK',
+  ...overrides,
+});
+
+export const budgetsResponse = (budgets: Budget[], month: string): BudgetsResponse => ({
+  month,
+  budgets,
+  totalLimitCents: budgets.reduce((s, b) => s + b.limitCents, 0),
+  totalSpentCents: budgets.reduce((s, b) => s + b.spentCents, 0),
+});
+
+export const notification = (overrides: Partial<AppNotification> = {}): AppNotification => ({
+  id: 'n1',
+  type: 'BUDGET_EXCEEDED',
+  title: 'Dining out budget reached',
+  body: "You've spent $312.40 of your $300.00 Dining out budget for October 2026.",
+  data: { category: 'DINING', month: '2026-10', threshold: 100 },
+  readAt: null,
+  createdAt: '2026-10-14T18:00:00.000Z',
+  ...overrides,
+});

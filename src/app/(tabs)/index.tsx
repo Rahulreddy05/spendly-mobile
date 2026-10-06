@@ -12,6 +12,7 @@ import { MerchantList } from '../../components/MerchantList';
 import { AppText, ErrorBanner, LoadingView, Notice } from '../../components/ui';
 import { SPACING } from '../../constants/theme.constants';
 import { VerifyEmailCard } from '../../components/VerifyEmailCard';
+import { BudgetsSummaryCard } from '../../components/BudgetsSummaryCard';
 
 export default function DashboardScreen() {
   const [year, setYear] = useState(() => new Date().getFullYear());
@@ -29,6 +30,7 @@ export default function DashboardScreen() {
   return (
     <Screen refreshing={summary.isRefetching} onRefresh={refresh}>
       <VerifyEmailCard />
+      {year === new Date().getFullYear() && <BudgetsSummaryCard />}
       <YearStepper value={year} onChange={setYear} />
 
       {summary.isLoading && <LoadingView label="Loading your summary" />}

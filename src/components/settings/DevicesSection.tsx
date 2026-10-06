@@ -1,5 +1,5 @@
 import { StyleSheet, View } from 'react-native';
-import { formatDate } from '@rahulreddy05/spendly-shared';
+import { formatDateTime } from '@rahulreddy05/spendly-shared';
 import { useRevokeOtherSessions, useRevokeSession, useSessions } from '../../hooks/use-security';
 import { AppText, Button, Card, ErrorBanner, LoadingView } from '../ui';
 import { useTheme } from '../../hooks/use-theme';
@@ -27,7 +27,7 @@ export function DevicesSection() {
               {s.current ? <AppText tone="income"> · This device</AppText> : null}
             </AppText>
             <AppText size="small" tone="muted">
-              Last active {formatDate(s.lastUsedAt)}
+              Last active {formatDateTime(s.lastUsedAt)}
               {s.ipAddress ? ` · IP ${s.ipAddress}` : ''}
             </AppText>
           </View>

@@ -79,6 +79,26 @@ export function fakeApi(overrides: DeepPartial<SpendlyApi> = {}): SpendlyApi {
       markReconnected: jest.fn(),
       remove: jest.fn().mockResolvedValue(undefined),
     },
+    budgets: {
+      list: jest
+        .fn()
+        .mockResolvedValue({
+          month: '2026-10',
+          budgets: [],
+          totalLimitCents: 0,
+          totalSpentCents: 0,
+        }),
+      create: jest.fn(),
+      update: jest.fn(),
+      remove: jest.fn().mockResolvedValue(undefined),
+    },
+    notifications: {
+      list: jest.fn().mockResolvedValue({ items: [], unreadCount: 0 }),
+      markRead: jest.fn().mockResolvedValue(undefined),
+      markAllRead: jest.fn().mockResolvedValue(undefined),
+      settings: jest.fn().mockResolvedValue({ budgetAlertEmail: true }),
+      updateSettings: jest.fn(),
+    },
   };
   for (const [group, fns] of Object.entries(overrides))
     Object.assign(base[group as keyof SpendlyApi], fns);

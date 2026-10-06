@@ -7,6 +7,13 @@ type IconName = ComponentProps<typeof Ionicons>['name'];
 export const TABS: readonly { name: string; title: string; icon: IconName }[] = [
   { name: 'index', title: 'Dashboard', icon: 'pie-chart-outline' },
   { name: 'accounts', title: 'Accounts', icon: 'wallet-outline' },
+  { name: 'budgets', title: 'Budgets', icon: 'speedometer-outline' },
   { name: 'transactions', title: 'Transactions', icon: 'list-outline' },
   { name: 'settings', title: 'Settings', icon: 'settings-outline' },
 ];
+
+/** Stack routes outside the tabs. */
+export const ROUTES = {
+  NOTIFICATIONS: '/notifications',
+  BUDGETS: '/budgets',
+} as const;

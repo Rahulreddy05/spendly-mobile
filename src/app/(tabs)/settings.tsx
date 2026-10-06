@@ -9,6 +9,7 @@ import { Screen } from '../../components/Screen';
 import { AppText, Button, Card, ErrorBanner, TextField } from '../../components/ui';
 import { SecondFactorInput } from '../../components/SecondFactorInput';
 import { VerifyEmailCard } from '../../components/VerifyEmailCard';
+import { NotificationsSection } from '../../components/settings/NotificationsSection';
 import { AppLockSection } from '../../components/settings/AppLockSection';
 import { TwoFactorSection } from '../../components/settings/TwoFactorSection';
 import { ChangePasswordSection } from '../../components/settings/ChangePasswordSection';
@@ -95,6 +96,7 @@ export default function SettingsScreen() {
         </AppText>
       </Card>
       <VerifyEmailCard />
+      <NotificationsSection />
       <AppLockSection />
       <TwoFactorSection />
       <ChangePasswordSection />
