@@ -1,9 +1,9 @@
-# Spendly Mobile
+# Pennypath Mobile
 
 @ENGINEERING_STANDARDS.md
 @AGENTS.md
 
-iPhone + Android app for Spendly: where your money comes from and where it goes.
+iPhone + Android app for Pennypath: where your money comes from and where it goes.
 Expo SDK 57 (React Native 0.86), Expo Router, TanStack Query, expo-secure-store.
 
 ## Shared code
@@ -86,6 +86,9 @@ and use Features → Face ID → Matching Face to pass the prompt.
 
 ## Status
 
-Phase 2 done, plus production-grade sign-in and account security. Phase 3: Stripe bank linking
-(`@stripe/stripe-react-native`), manual accounts and transactions, re-categorise.
+Phase 2 done, plus production-grade sign-in and account security, and Plaid bank linking
+(`react-native-plaid-link-sdk` v13, a native Expo module: rebuild with `npx expo run:ios|android`
+after changing it; in Expo Go linking is hidden). `BankLinker` strategy (`PlaidNativeLinker`)
+is injected via AppServices; hooks in `use-connections.ts`. Sandbox bank login:
+`user_good` / `pass_good`. Next: manual accounts and transactions on mobile, re-categorise.
 Phase 4: E2E (Maestro), EAS builds, TestFlight / Play internal testing.

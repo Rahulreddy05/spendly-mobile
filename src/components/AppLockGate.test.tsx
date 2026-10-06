@@ -32,7 +32,7 @@ describe('AppLockGate', () => {
     biometrics.config.succeed = false;
     appState('background');
     appState('active');
-    expect(await screen.findByText('Spendly is locked')).toBeTruthy();
+    expect(await screen.findByText('Pennypath is locked')).toBeTruthy();
     expect(screen.queryByText('Secret balances')).toBeNull();
 
     fireEvent.press(screen.getByRole('button', { name: 'Sign out' }));
@@ -73,7 +73,7 @@ describe('AppLockGate', () => {
     expect(screen.queryByText('Secret balances')).toBeNull();
 
     await act(async () => decide(true));
-    expect(await screen.findByText('Spendly is locked')).toBeTruthy();
+    expect(await screen.findByText('Pennypath is locked')).toBeTruthy();
     expect(screen.queryByText('Secret balances')).toBeNull();
   });
 

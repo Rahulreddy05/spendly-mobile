@@ -49,7 +49,7 @@ function DeleteAccountModal({ visible, onClose }: { visible: boolean; onClose: (
           Delete your account
         </AppText>
         <AppText tone="muted">
-          This permanently deletes your Spendly account, your accounts and every transaction, and
+          This permanently deletes your Pennypath account, your accounts and every transaction, and
           disconnects any linked banks. It cannot be undone.
         </AppText>
         <TextField
@@ -105,7 +105,7 @@ export default function SettingsScreen() {
         <Button title="Delete account" variant="danger" onPress={() => setDeleting(true)} />
       </View>
       <AppText size="caption" tone="muted">
-        Spendly {version}
+        Pennypath {version}
       </AppText>
       <DeleteAccountModal visible={deleting} onClose={() => setDeleting(false)} />
     </Screen>

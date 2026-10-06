@@ -11,12 +11,12 @@ export function UpgradeRequired({ minVersion }: { minVersion?: string }) {
     <SafeAreaView style={[styles.fill, { backgroundColor: theme.background }]}>
       <View style={styles.body} accessibilityRole="alert">
         <AppText size="headline" bold accessibilityRole="header">
-          Update Spendly
+          Update Pennypath
         </AppText>
         <AppText tone="muted">
           This version of the app is no longer supported
           {minVersion ? ` — version ${minVersion} or newer is required` : ''}. Please update from
-          the App Store or Google Play to keep using Spendly.
+          the App Store or Google Play to keep using Pennypath.
         </AppText>
       </View>
     </SafeAreaView>

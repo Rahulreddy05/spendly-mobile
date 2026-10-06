@@ -7,6 +7,7 @@ import { ReauthProvider } from '../auth/ReauthProvider';
 import type { AppServices } from '../services/app-services';
 import type { BiometricAuth } from '../services/biometrics';
 import type { Preferences } from '../services/preferences';
+import type { BankLinker } from '../services/bank-linker';
 import { session, summary } from './fixtures';
 
 type DeepPartial<T> = { [K in keyof T]?: T[K] extends object ? DeepPartial<T[K]> : T[K] };
@@ -36,12 +37,10 @@ export function fakeApi(overrides: DeepPartial<SpendlyApi> = {}): SpendlyApi {
     },
     security: {
       mfaStatus: jest.fn().mockResolvedValue({ enabled: false, recoveryCodesRemaining: 0 }),
-      setupTotp: jest
-        .fn()
-        .mockResolvedValue({
-          secret: 'JBSWY3DPEHPK3PXP',
-          otpauthUrl: 'otpauth://totp/Spendly:r?secret=JBSWY3DPEHPK3PXP&issuer=Spendly',
-        }),
+      setupTotp: jest.fn().mockResolvedValue({
+        secret: 'JBSWY3DPEHPK3PXP',
+        otpauthUrl: 'otpauth://totp/Pennypath:r?secret=JBSWY3DPEHPK3PXP&issuer=Pennypath',
+      }),
       confirmTotp: jest.fn().mockResolvedValue(['AAAA-BBBB', 'CCCC-DDDD']),
       disableMfa: jest.fn().mockResolvedValue(undefined),
       regenerateRecoveryCodes: jest.fn().mockResolvedValue(['EEEE-FFFF']),
@@ -68,9 +67,17 @@ export function fakeApi(overrides: DeepPartial<SpendlyApi> = {}): SpendlyApi {
     },
     connections: {
       providers: jest.fn().mockResolvedValue([]),
-      startLink: jest.fn(),
-      completeLink: jest.fn(),
-      refreshAccount: jest.fn(),
+      list: jest.fn().mockResolvedValue([]),
+      createLinkToken: jest
+        .fn()
+        .mockResolvedValue({ linkToken: 'link-sandbox-1', expiration: '2026-10-03T12:00:00Z' }),
+      exchange: jest.fn(),
+      sync: jest.fn().mockResolvedValue({ upserted: 0, removed: 0 }),
+      createUpdateLinkToken: jest
+        .fn()
+        .mockResolvedValue({ linkToken: 'link-update-1', expiration: '2026-10-03T12:00:00Z' }),
+      markReconnected: jest.fn(),
+      remove: jest.fn().mockResolvedValue(undefined),
     },
   };
   for (const [group, fns] of Object.entries(overrides))
@@ -109,18 +116,20 @@ export function fakeServices({
   signedIn = true,
   biometrics = fakeBiometrics(),
   preferences = fakePreferences(),
+  linker = null,
 }: {
   api?: SpendlyApi;
   signedIn?: boolean;
   biometrics?: BiometricAuth;
   preferences?: Preferences;
+  linker?: BankLinker | null;
 } = {}): AppServices {
   const http = new HttpClient({
     baseUrl: '/api/v1',
     fetch: jest.fn(),
     refreshTokenStore: memoryRefreshTokenStore(signedIn ? 'stored-refresh' : null),
   });
-  return { http, api, biometrics, preferences };
+  return { http, api, biometrics, preferences, linker };
 }
 
 export function renderWithProviders(ui: ReactElement, services: AppServices = fakeServices()) {

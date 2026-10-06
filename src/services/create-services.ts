@@ -9,6 +9,17 @@ import { secureRefreshTokenStore } from './secure-refresh-token-store';
 import { expoBiometricAuth } from './biometrics';
 import { securePreferences } from './preferences';
 import type { AppServices } from './app-services';
+import { PlaidNativeLinker, type PlaidNativeSdk } from './plaid-native-linker';
+
+/** The Plaid SDK is a native module; it is missing in Expo Go, where linking is simply hidden. */
+function loadPlaidSdk(): PlaidNativeSdk | null {
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    return require('react-native-plaid-link-sdk') as PlaidNativeSdk;
+  } catch {
+    return null;
+  }
+}
 
 /** Composition root: the only place real implementations are constructed. */
 export function createAppServices(): AppServices {
@@ -26,10 +37,12 @@ export function createAppServices(): AppServices {
     // The refresh token travels in the request body; no cookies needed.
     credentials: 'omit',
   });
+  const plaid = loadPlaidSdk();
   return {
     http,
     api: createSpendlyApi(http),
     biometrics: expoBiometricAuth(Platform.OS),
     preferences: securePreferences(SecureStore),
+    linker: plaid ? new PlaidNativeLinker(plaid) : null,
   };
 }

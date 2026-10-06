@@ -63,7 +63,7 @@ describe('two-factor sign-in', () => {
     });
 
     fireEvent.press(screen.getByRole('button', { name: 'Back to sign in' }));
-    expect(await screen.findByText('Sign in to Spendly')).toBeTruthy();
+    expect(await screen.findByText('Sign in to Pennypath')).toBeTruthy();
   });
 });
 
@@ -98,7 +98,7 @@ describe('biometric app lock', () => {
 
     // The prompt appears straight away and succeeds.
     expect(await screen.findByText(/you brought in/)).toBeTruthy();
-    expect(biometrics.authenticate).toHaveBeenCalledWith('Unlock Spendly');
+    expect(biometrics.authenticate).toHaveBeenCalledWith('Unlock Pennypath');
   });
 
   it('stays locked when Face ID fails, and offers sign-out', async () => {
@@ -106,7 +106,7 @@ describe('biometric app lock', () => {
     mockServices = fakeServices({ biometrics, preferences: fakePreferences(true) });
     renderRouter(APP_DIR, { initialUrl: '/' });
 
-    expect(await screen.findByText('Spendly is locked')).toBeTruthy();
+    expect(await screen.findByText('Pennypath is locked')).toBeTruthy();
     expect(screen.queryByText(/you brought in/)).toBeNull();
 
     biometrics.config.succeed = true;

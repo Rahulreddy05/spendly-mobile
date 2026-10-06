@@ -40,7 +40,7 @@ yarn-error.*
 /ios
 /android
 
-# Spendly
+# Pennypath
 .env
 .env.*
 !.env.example
