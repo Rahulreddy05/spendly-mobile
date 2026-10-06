@@ -2,6 +2,7 @@ import { Tabs } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useTheme } from '../../hooks/use-theme';
 import { TABS } from '../../constants/navigation.constants';
+import { NotificationBellButton } from '../../components/NotificationBellButton';
 
 export default function TabsLayout() {
   const theme = useTheme();
@@ -13,6 +14,7 @@ export default function TabsLayout() {
         tabBarStyle: { backgroundColor: theme.surface, borderTopColor: theme.border },
         headerStyle: { backgroundColor: theme.surface },
         headerTintColor: theme.text,
+        headerRight: () => <NotificationBellButton />,
       }}
     >
       {TABS.map((tab) => (

@@ -90,5 +90,8 @@ Phase 2 done, plus production-grade sign-in and account security, and Plaid bank
 (`react-native-plaid-link-sdk` v13, a native Expo module: rebuild with `npx expo run:ios|android`
 after changing it; in Expo Go linking is hidden). `BankLinker` strategy (`PlaidNativeLinker`)
 is injected via AppServices; hooks in `use-connections.ts`. Sandbox bank login:
-`user_good` / `pass_good`. Next: manual accounts and transactions on mobile, re-categorise.
+`user_good` / `pass_good`. Budgets tab (monthly category limits, 80%/100% alerts), a bell in every tab header
+opening `/notifications`, a budgets card on the Dashboard, and an email-alerts switch in
+Settings. React Query refetches when the app returns to the foreground
+(`connectQueryFocusToAppState`). Next: manual accounts and transactions on mobile, re-categorise.
 Phase 4: E2E (Maestro), EAS builds, TestFlight / Play internal testing.

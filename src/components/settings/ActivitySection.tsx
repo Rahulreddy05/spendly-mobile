@@ -2,7 +2,7 @@ import { View } from 'react-native';
 import {
   SECURITY_EVENT_LABEL,
   WARNING_SECURITY_EVENTS,
-  formatDate,
+  formatDateTime,
 } from '@rahulreddy05/spendly-shared';
 import { useSecurityEvents } from '../../hooks/use-security';
 import { AppText, Card, ErrorBanner, LoadingView } from '../ui';
@@ -24,7 +24,7 @@ export function ActivitySection() {
             {SECURITY_EVENT_LABEL[e.type]}
           </AppText>
           <AppText size="small" tone="muted">
-            {formatDate(e.createdAt)}
+            {formatDateTime(e.createdAt)}
             {e.deviceName ? ` · ${e.deviceName}` : ''}
           </AppText>
         </View>

@@ -3,7 +3,7 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { AppProviders, createQueryClient } from '../providers';
+import { AppProviders, connectQueryFocusToAppState, createQueryClient } from '../providers';
 import { createAppServices } from '../services/create-services';
 import { useAppServices } from '../services/app-services';
 import { useAuth } from '../auth/auth-context';
@@ -17,6 +17,7 @@ SplashScreen.preventAutoHideAsync().catch(() => undefined);
 export default function RootLayout() {
   const [services] = useState(createAppServices);
   const [queryClient] = useState(createQueryClient);
+  useEffect(connectQueryFocusToAppState, []);
 
   return (
     <SafeAreaProvider>
@@ -49,6 +50,10 @@ function RootNavigator() {
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Protected guard={signedIn}>
         <Stack.Screen name="(tabs)" />
+        <Stack.Screen
+          name="notifications"
+          options={{ headerShown: true, title: 'Notifications', headerBackTitle: 'Back' }}
+        />
       </Stack.Protected>
       <Stack.Protected guard={!signedIn}>
         <Stack.Screen name="login" />

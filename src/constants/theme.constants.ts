@@ -12,6 +12,7 @@ export const PALETTE = {
     income: '#1f7a4d',
     expense: '#b4492d',
     danger: '#b42318',
+    warning: '#a86512',
   },
   dark: {
     background: '#0f1412',
@@ -25,6 +26,7 @@ export const PALETTE = {
     income: '#5cc58f',
     expense: '#ef8a6b',
     danger: '#f97066',
+    warning: '#e3a74a',
   },
 } as const;
 
