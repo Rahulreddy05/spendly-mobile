@@ -39,7 +39,7 @@ export function fakeApi(overrides: DeepPartial<SpendlyApi> = {}): SpendlyApi {
       mfaStatus: jest.fn().mockResolvedValue({ enabled: false, recoveryCodesRemaining: 0 }),
       setupTotp: jest.fn().mockResolvedValue({
         secret: 'JBSWY3DPEHPK3PXP',
-        otpauthUrl: 'otpauth://totp/Spendly:r?secret=JBSWY3DPEHPK3PXP&issuer=Spendly',
+        otpauthUrl: 'otpauth://totp/Pennypath:r?secret=JBSWY3DPEHPK3PXP&issuer=Pennypath',
       }),
       confirmTotp: jest.fn().mockResolvedValue(['AAAA-BBBB', 'CCCC-DDDD']),
       disableMfa: jest.fn().mockResolvedValue(undefined),

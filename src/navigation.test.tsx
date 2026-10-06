@@ -14,7 +14,7 @@ describe('navigation and sign-in', () => {
     mockServices = fakeServices({ signedIn: false });
     renderRouter(APP_DIR, { initialUrl: '/transactions' });
 
-    expect(await screen.findByText('Sign in to Spendly')).toBeTruthy();
+    expect(await screen.findByText('Sign in to Pennypath')).toBeTruthy();
     expect(screen).toHavePathname('/login');
     expect(mockServices.api.auth.restoreSession).not.toHaveBeenCalled();
   });
@@ -92,7 +92,7 @@ describe('navigation and sign-in', () => {
       }),
     });
     renderRouter(APP_DIR, { initialUrl: '/' });
-    expect(await screen.findByText('Sign in to Spendly')).toBeTruthy();
+    expect(await screen.findByText('Sign in to Pennypath')).toBeTruthy();
   });
 
   it('replaces the app with an update prompt when the API answers 426', async () => {
@@ -121,12 +121,12 @@ describe('navigation and sign-in', () => {
       linker: null,
     };
     renderRouter(APP_DIR, { initialUrl: '/login' });
-    await screen.findByText('Sign in to Spendly');
+    await screen.findByText('Sign in to Pennypath');
 
     await act(async () => {
       await http.request('/anything').catch(() => undefined);
     });
-    expect(await screen.findByText('Update Spendly')).toBeTruthy();
+    expect(await screen.findByText('Update Pennypath')).toBeTruthy();
     expect(screen.getByText(/version 2\.0\.0 or newer/)).toBeTruthy();
   });
 });

@@ -35,7 +35,7 @@ export function useLinkProviders() {
 
 function requireLinker(linker: BankLinker | null): BankLinker {
   if (!linker)
-    throw new Error('Bank linking needs the full Spendly app (not available in Expo Go).');
+    throw new Error('Bank linking needs the full Pennypath app (not available in Expo Go).');
   return linker;
 }
 

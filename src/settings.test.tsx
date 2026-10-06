@@ -24,7 +24,7 @@ describe('two-factor authentication', () => {
   it('confirms the password, opens the authenticator, and shows recovery codes once', async () => {
     const setupTotp = jest.fn().mockRejectedValueOnce(reauthRequired()).mockResolvedValue({
       secret: 'JBSWY3DPEHPK3PXP',
-      otpauthUrl: 'otpauth://totp/Spendly:r?secret=JBSWY3DPEHPK3PXP',
+      otpauthUrl: 'otpauth://totp/Pennypath:r?secret=JBSWY3DPEHPK3PXP',
     });
     const services = fakeServices({ api: fakeApi({ security: { setupTotp } }) });
     jest.spyOn(Linking, 'openURL').mockResolvedValue(true);
@@ -43,7 +43,7 @@ describe('two-factor authentication', () => {
 
     fireEvent.press(screen.getByRole('button', { name: 'Open authenticator app' }));
     expect(Linking.openURL).toHaveBeenCalledWith(
-      'otpauth://totp/Spendly:r?secret=JBSWY3DPEHPK3PXP',
+      'otpauth://totp/Pennypath:r?secret=JBSWY3DPEHPK3PXP',
     );
     fireEvent.press(screen.getByRole('button', { name: 'Copy key' }));
     expect(await screen.findByRole('button', { name: 'Copied' })).toBeTruthy();

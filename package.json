@@ -51,7 +51,7 @@
     "format": "prettier --write \"src/**/*.{ts,tsx}\" \"plugins/**/*.js\""
   },
   "private": true,
-  "description": "Spendly for iPhone and Android — where your money comes from and where it goes",
+  "description": "Pennypath for iPhone and Android — where your money comes from and where it goes",
   "engines": {
     "node": ">=22"
   },

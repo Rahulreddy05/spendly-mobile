@@ -42,9 +42,9 @@ describe('expoBiometricAuth', () => {
 
   it('authenticates with the device passcode as a fallback', async () => {
     LA.authenticateAsync.mockResolvedValue({ success: true });
-    expect(await expoBiometricAuth('ios').authenticate('Unlock Spendly')).toBe(true);
+    expect(await expoBiometricAuth('ios').authenticate('Unlock Pennypath')).toBe(true);
     expect(LA.authenticateAsync).toHaveBeenCalledWith({
-      promptMessage: 'Unlock Spendly',
+      promptMessage: 'Unlock Pennypath',
       cancelLabel: 'Cancel',
     });
     LA.authenticateAsync.mockResolvedValue({ success: false, error: 'user_cancel' });

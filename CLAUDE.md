@@ -1,9 +1,9 @@
-# Spendly Mobile
+# Pennypath Mobile
 
 @ENGINEERING_STANDARDS.md
 @AGENTS.md
 
-iPhone + Android app for Spendly: where your money comes from and where it goes.
+iPhone + Android app for Pennypath: where your money comes from and where it goes.
 Expo SDK 57 (React Native 0.86), Expo Router, TanStack Query, expo-secure-store.
 
 ## Shared code

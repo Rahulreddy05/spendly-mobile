@@ -1,7 +1,7 @@
 import { ApiError, ERROR_CODE } from '@rahulreddy05/spendly-shared';
 import type { BankLinker, LinkOutcome } from './bank-linker';
 
-/** The slice of react-native-plaid-link-sdk (v13) Spendly uses; injected so tests need no native module. */
+/** The slice of react-native-plaid-link-sdk (v13) Pennypath uses; injected so tests need no native module. */
 export interface PlaidNativeSdk {
   createPlaidLinkSession(config: {
     token: string;

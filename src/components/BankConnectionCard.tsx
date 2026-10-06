@@ -22,7 +22,7 @@ export function BankConnectionCard({ connection }: { connection: BankConnection 
   const onRemove = () =>
     Alert.alert(
       `Remove ${name}?`,
-      'Spendly loses access, and its accounts and imported transactions are deleted.',
+      'Pennypath loses access, and its accounts and imported transactions are deleted.',
       [
         { text: 'Cancel', style: 'cancel' },
         { text: 'Remove', style: 'destructive', onPress: () => remove.mutate(connection.id) },

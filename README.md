@@ -1,6 +1,6 @@
 # spendly-mobile
 
-**Spendly** for iPhone and Android — see where your money comes from and where it goes.
+**Pennypath** for iPhone and Android — see where your money comes from and where it goes.
 
 Expo (React Native) · Expo Router · TanStack Query · TypeScript
 

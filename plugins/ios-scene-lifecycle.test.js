@@ -14,8 +14,8 @@ const template = fs.readFileSync(
 
 describe('iOS scene life cycle plugin', () => {
   it("registers expo's scene delegate in Info.plist, keeping other keys", () => {
-    const plist = withSceneManifest({ CFBundleName: 'Spendly' });
-    expect(plist.CFBundleName).toBe('Spendly');
+    const plist = withSceneManifest({ CFBundleName: 'Pennypath' });
+    expect(plist.CFBundleName).toBe('Pennypath');
     expect(
       plist.UIApplicationSceneManifest.UISceneConfigurations.UIWindowSceneSessionRoleApplication,
     ).toEqual([

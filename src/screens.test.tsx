@@ -72,12 +72,12 @@ describe('Dashboard', () => {
           analytics: {
             summary: jest
               .fn()
-              .mockRejectedValue(new ApiError(0, 'NETWORK_ERROR', 'Could not reach Spendly.')),
+              .mockRejectedValue(new ApiError(0, 'NETWORK_ERROR', 'Could not reach Pennypath.')),
           },
         }),
       ),
     );
-    expect(await screen.findByText('Could not reach Spendly.')).toBeTruthy();
+    expect(await screen.findByText('Could not reach Pennypath.')).toBeTruthy();
   });
 });
 

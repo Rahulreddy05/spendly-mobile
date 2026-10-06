@@ -107,7 +107,7 @@ export function TwoFactorSection() {
 
       {mode === 'setup' && setup && (
         <>
-          <AppText>1. Add Spendly to your authenticator app.</AppText>
+          <AppText>1. Add Pennypath to your authenticator app.</AppText>
           <Button
             title="Open authenticator app"
             variant="secondary"
@@ -176,7 +176,7 @@ export function TwoFactorSection() {
             title="Share or save"
             variant="secondary"
             onPress={() =>
-              void Share.share({ message: `Spendly recovery codes\n\n${codes.join('\n')}` })
+              void Share.share({ message: `Pennypath recovery codes\n\n${codes.join('\n')}` })
             }
           />
           <Button title="I've saved them" onPress={finish} />
